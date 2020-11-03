@@ -15,8 +15,15 @@ if command -v nvim >/dev/null 2>&1; then
     nvim '+PlugUpdate' '+PlugClean!' '+PlugUpdate' '+qall'
 fi
 
-echo "Bootstrapping NeoVIm"
+echo "Bootstrapping tmux"
 cd
 git clone https://github.com/gpakosz/.tmux.git
 ln -s -f .tmux/.tmux.conf
 cp .tmux/.tmux.conf.local .
+
+echo "Configuring git"
+git config --global user.email "im.qianmian.yu@gmail.com"
+git config --global user.name  "qianmian yu"
+git config --global pull.rebase true
+git config --global credential.helper store
+
