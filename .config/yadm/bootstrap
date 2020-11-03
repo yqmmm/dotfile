@@ -1,0 +1,10 @@
+#!/bin/sh
+
+# install vimplug, alternatively you can do this in init.vim
+sh -c 'curl -fLo "${XDG_DATA_HOME:-$HOME/.local/share}"/nvim/site/autoload/plug.vim --create-dirs \
+       https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim'
+
+if command -v nvim >/dev/null 2>&1; then
+    echo "Bootstrapping NeoVIm"
+    nvim '+PlugUpdate' '+PlugClean!' '+PlugUpdate' '+qall'
+fi
