@@ -14,3 +14,9 @@ if command -v nvim >/dev/null 2>&1; then
     echo "Bootstrapping NeoVIm"
     nvim '+PlugUpdate' '+PlugClean!' '+PlugUpdate' '+qall'
 fi
+
+echo "Bootstrapping NeoVIm"
+cd
+git clone https://github.com/gpakosz/.tmux.git
+ln -s -f .tmux/.tmux.conf
+cp .tmux/.tmux.conf.local .
