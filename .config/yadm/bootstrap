@@ -27,3 +27,7 @@ git config --global user.name  "qianmian yu"
 git config --global pull.rebase true
 git config --global credential.helper store
 
+cat << EOF >> ~/.zshrc
+for file in ~/.zsh-contrib/*.zsh; do
+    source "$file"
+done
