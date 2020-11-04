@@ -360,3 +360,6 @@ tmux_conf_copy_to_os_clipboard=false
 bind -r Left previous-window # select previous window
 bind -r Right next-window     # select next window
 
+# Set title name (https://stackoverflow.com/questions/12018783/how-to-set-iterm2-tab-title-to-that-of-a-running-tmux-session-name/49948404)
+set-option -g set-titles on
+set-option -g set-titles-string "#{session_name}"
