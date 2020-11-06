@@ -68,6 +68,9 @@ let g:Lf_PreviewInPopup = 1
 " TagBar
 nmap <F7> :TagbarToggle<CR>
 
+" im-select
+" let g:im_select_enable_focus_events = 0
+
 " =============================================================================
 " # Editor settings
 " =============================================================================
@@ -138,8 +141,10 @@ let g:indent_guides_enable_on_vim_startup=1
 " Coc Completion
 " Better display for messages
 set cmdheight=2
+
 " You will have bad experience for diagnostic messages when it's default 4000.
 set updatetime=300
+
 " Use tab for trigger completion with characters ahead and navigate.
 " Use command ':verbose imap <tab>' to make sure tab is not mapped by other plugin.
 inoremap <silent><expr> <TAB>
@@ -151,8 +156,10 @@ function! s:check_back_space() abort
   let col = col('.') - 1
   return !col || getline('.')[col - 1]  =~# '\s'
 endfunction
+
 " Use <c-.> to trigger completion.
 inoremap <silent><expr> <c-.> coc#refresh()
+
 " Use <cr> to confirm completion, `<C-g>u` means break undo chain at current position.
 " Coc only does snippet and additional edit on confirm.
 " inoremap <expr> <cr> pumvisible() ? "\<C-y>" : "\<C-g>u\<CR>"
@@ -222,13 +229,14 @@ call plug#begin('~/.vim/plugged')
 " Vim Enhancement
 Plug 'tpope/vim-surround'
 Plug 'tpope/vim-commentary'
-" Plug 'terryma/vim-smooth-scroll'
 Plug 'easymotion/vim-easymotion'
 Plug 'scrooloose/nerdtree'
 Plug 'wakatime/vim-wakatime'
 Plug 'ybian/smartim'
-Plug 'brglng/vim-im-select', {'for': ['markdown', 'latex']}
+" Plug 'tmux-plugins/vim-tmux-focus-events' " For vim-im-select to work under tmux
+" Plug 'brglng/vim-im-select'
 Plug 'tpope/vim-eunuch'
+" Plug 'terryma/vim-smooth-scroll'
 
 " Text Object
 " Plug 'kana/vim-textobj-user'
@@ -247,17 +255,13 @@ Plug 'Yggdroot/LeaderF', { 'do': './install.sh' }
 
 " Language Specific
 Plug 'cespare/vim-toml'
-Plug 'neoclide/coc.nvim', {'branch': 'release'}
+" Plug 'neoclide/coc.nvim', {'branch': 'release'}
 Plug 'majutsushi/tagbar'
-" Plug 'chiel92/vim-autoformat'
-" Plug 'rust-lang/rust.vim'
-" Plug 'pangloss/vim-javascript'
-" Plug 'wlangstroth/vim-racket', { 'for': 'racket'}
-" Plug 'plasticboy/vim-markdown', { 'for': 'markdown' }
-" Plug 'racer-rust/vim-racer'
+Plug 'plasticboy/vim-markdown', { 'for': 'markdown' }
 Plug 'lervag/vimtex', { 'for': ['latex'] }
-" Plug 'nathangrigg/vim-beancount'
 Plug 'nathangrigg/vim-beancount'
+" Plug 'chiel92/vim-autoformat'
+" Plug 'wlangstroth/vim-racket', { 'for': 'racket'}
 
 " Plug 'ludovicchabant/vim-gutentags'
 call plug#end()
