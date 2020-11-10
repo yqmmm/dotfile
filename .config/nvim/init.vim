@@ -255,7 +255,7 @@ Plug 'Yggdroot/LeaderF', { 'do': './install.sh' }
 
 " Language Specific
 Plug 'cespare/vim-toml'
-" Plug 'neoclide/coc.nvim', {'branch': 'release'}
+Plug 'neoclide/coc.nvim'
 Plug 'majutsushi/tagbar'
 Plug 'plasticboy/vim-markdown', { 'for': 'markdown' }
 Plug 'lervag/vimtex', { 'for': ['latex'] }
