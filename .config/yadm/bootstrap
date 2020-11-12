@@ -31,3 +31,4 @@ cat << EOF >> ~/.zshrc
 for file in ~/.zsh-contrib/*.zsh; do
     source "$file"
 done
+EOF
