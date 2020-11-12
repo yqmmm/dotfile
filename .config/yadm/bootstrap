@@ -51,6 +51,6 @@ ln -s -f .tmux/.tmux.conf
 
 cat << EOF >> ~/.zshrc
 for file in ~/.zsh-contrib/*.zsh; do
-    source "$file"
+    source "\$file"
 done
 EOF
