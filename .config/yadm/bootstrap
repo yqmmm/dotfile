@@ -18,8 +18,8 @@ HAS_SUDO=$(has_sudo)
 
 
 if [ "$system_type" = "Linux" ] && [ "$HAS_SUDO" != "no_sudo" ] ; then
-    echo "Installing neovim"
-    sudo apt install neovim
+    echo "Installing packages"
+    sudo apt install neovim fzf
 fi
 
 if command -v nvim >/dev/null 2>&1; then
@@ -53,8 +53,11 @@ cd
 git clone https://github.com/gpakosz/.tmux.git
 ln -s -f .tmux/.tmux.conf
 
-cat << EOF >> ~/.zshrc
-for file in ~/.zsh-contrib/*.zsh; do
-    source "\$file"
-done
-EOF
+if ! grep -q '# added by yadm' ~/.zshrc; then
+  cat << EOF >> ~/.zshrc
+  # added by yadm
+  for file in ~/.zsh-contrib/*.zsh; do
+      source "\$file"
+  done
+  EOF
+fi

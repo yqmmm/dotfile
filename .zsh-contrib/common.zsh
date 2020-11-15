@@ -1,3 +1,8 @@
+export TERM=xterm-256color
+
+export EDITOR=vim
+export VISUAL=vim
+
 function proxy() {
   addr="http://${1}:${2}"
   export https_proxy=${addr};
