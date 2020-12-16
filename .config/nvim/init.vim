@@ -226,6 +226,7 @@ inoremap <F5> <C-R>=strftime("%F")<CR>
 " # Plugin
 " =============================================================================
 call plug#begin('~/.vim/plugged')
+Plug 'lervag/vimtex'
 " Vim Enhancement
 Plug 'tpope/vim-surround'
 Plug 'tpope/vim-commentary'
@@ -258,7 +259,6 @@ Plug 'cespare/vim-toml'
 Plug 'neoclide/coc.nvim'
 Plug 'majutsushi/tagbar'
 Plug 'plasticboy/vim-markdown', { 'for': 'markdown' }
-Plug 'lervag/vimtex', { 'for': ['latex'] }
 Plug 'nathangrigg/vim-beancount'
 " Plug 'chiel92/vim-autoformat'
 " Plug 'wlangstroth/vim-racket', { 'for': 'racket'}
