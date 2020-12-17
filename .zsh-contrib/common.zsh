@@ -2,6 +2,7 @@ export TERM=xterm-256color
 
 export EDITOR=vim
 export VISUAL=vim
+alias vim='nvim'
 
 function proxy() {
   addr="http://${1}:${2}"

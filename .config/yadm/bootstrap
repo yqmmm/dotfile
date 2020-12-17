@@ -19,7 +19,7 @@ HAS_SUDO=$(has_sudo)
 
 if [ "$system_type" = "Linux" ] && [ "$HAS_SUDO" != "no_sudo" ] ; then
     echo "Installing packages"
-    sudo apt install neovim fzf
+    sudo apt install neovim fzf ripgrep
 fi
 
 if command -v nvim >/dev/null 2>&1; then
