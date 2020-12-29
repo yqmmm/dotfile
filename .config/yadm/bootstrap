@@ -54,5 +54,5 @@ git clone https://github.com/gpakosz/.tmux.git
 ln -s -f .tmux/.tmux.conf
 
 if ! grep -q '# added by yadm' ~/.zshrc; then
-  cat 'source <(cat ~/.zsh-contrib/*.zsh)' >> ~/.zshrc
+  echo 'source <(cat ~/.zsh-contrib/*.zsh)' >> ~/.zshrc
 fi
