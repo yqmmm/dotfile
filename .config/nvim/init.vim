@@ -11,6 +11,8 @@ let g:python3_host_prog = "/Users/Quack/.asdf/shims/python"
 " =============================================================================
 autocmd FileType tex nnoremap j gj
 autocmd FileType tex nnoremap k gk
+autocmd FileType markdown nnoremap j gj
+autocmd FileType markdown nnoremap k gk
 
 nnoremap <C-e> 2<C-e>
 nnoremap <C-y> 2<C-y>
