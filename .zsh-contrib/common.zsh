@@ -11,3 +11,8 @@ function proxy() {
   export ALL_PROXY=${addr};
   export all_proxy=${addr};
 }
+
+function take() {
+  mkdir -p $@ && cd ${@:$#}
+}
+

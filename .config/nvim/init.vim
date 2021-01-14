@@ -224,6 +224,11 @@ inoremap <F5> <C-R>=strftime("%F")<CR>
 "     return 0
 " endfunction
 
+" wiki
+let g:wiki_root = '~/notes'
+let g:wiki_filetypes = ['wiki', 'md']
+
+
 " =============================================================================
 " # Plugin
 " =============================================================================
@@ -266,6 +271,7 @@ Plug 'nathangrigg/vim-beancount'
 " Plug 'wlangstroth/vim-racket', { 'for': 'racket'}
 
 " Plug 'ludovicchabant/vim-gutentags'
+Plug 'lervag/wiki.vim'
 call plug#end()
 
 filetype plugin indent on    " required
