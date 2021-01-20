@@ -1,4 +1,5 @@
 " Use GUI colorsetting in TUI
+" Does not really look coherent with iTerm2.
 " set termguicolors
 
 colorscheme desert

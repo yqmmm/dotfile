@@ -1,3 +1,4 @@
+
 let mapleader = "\<Space>"
 let maplocalleader = "\\"
 
@@ -5,19 +6,46 @@ let maplocalleader = "\\"
 command! Ca execute "%y+"
 
 let g:python3_host_prog = "/Users/Quack/.asdf/shims/python"
-"
+
+" Learn Vimscript the Hard Way ========= {{{
+nnoremap - ddp
+nnoremap _ ddkP
+
+inoremap <c-u> <esc>viwUi
+
+nnoremap <leader>ev :tab new $MYVIMRC<cr>
+nnoremap <leader>sv :source $MYVIMRC<cr>
+
+iabbrev @@ im.qianmian.yu@gmail.com
+" }}}
+
+
 " =============================================================================
 " # Keymap
 " =============================================================================
-autocmd FileType tex nnoremap j gj
-autocmd FileType tex nnoremap k gk
-autocmd FileType markdown nnoremap j gj
-autocmd FileType markdown nnoremap k gk
+augroup text_file
+    autocmd!
+    autocmd FileType tex      nnoremap j gj
+    autocmd FileType tex      nnoremap k gk
+    autocmd FileType markdown nnoremap j gj
+    autocmd FileType markdown nnoremap k gk
+augroup END
 
+au BufNewFile,BufRead Dockerfile* set filetype=Dockerfile
+
+
+" Vimscript file settings {{{
+augroup vimscript
+    autocmd!
+    autocmd FileType vim setlocal foldmethod=marker
+augroup END
+" }}}
+
+
+" Mappings {{{
 nnoremap <C-e> 2<C-e>
 nnoremap <C-y> 2<C-y>
 
-" Ctrl+h & Backspace to stop searching
 vnoremap <C-h> :nohlsearch<cr>
 nnoremap <C-h> :nohlsearch<cr>
 nnoremap <BS> :nohlsearch<cr>
@@ -30,7 +58,9 @@ nnoremap <C-Right> :tabnext<CR>
 
 map <left> ^
 map <right> $
-nmap <leader>w :w<CR>
+nnoremap <leader>w :w<CR>
+
+noremap <leader>j <c-^>
 
 " buffers
 set wildchar=<Tab> wildmenu wildmode=full
@@ -48,35 +78,16 @@ noremap <Leader>p "*p
 nnoremap <leader>l :silent make\|redraw!\|cc<CR>
 
 " Help Page
-" :cabbrev help tab help
 cabbrev help tab help
 
-" let g:rooter_change_directory_for_non_project_files = 'current'
+" Insert time
+inoremap <F5> <C-R>=strftime("%F")<CR>
+" }}}
 
-" LeaderF
-let g:Lf_WindowPosition = 'popup'
-" let g:Lf_UseVersionControlTool = 0
-let g:Lf_ShowDevIcons = 0
-let g:Lf_ShortcutF = "<C-p>"
-let g:Lf_ShortcutB = "<C-a>"
-noremap <leader>m :<C-U><C-R>=printf("Leaderf mru %s", "")<CR><CR>
-noremap <leader>f :Leaderf rg<CR>
-noremap <leader>b :Leaderf buffer<CR>
-noremap <leader>a :Leaderf cmdHistory<CR>
-xnoremap gf :<C-U><C-R>=printf("Leaderf! rg -F -e %s ", leaderf#Rg#visual())<CR>
-let g:Lf_CommandMap = {'<C-J>': ['<C-J>', '<Down>'], '<C-K>': ['<C-K>', '<Up>']}
-let g:Lf_PreviewInPopup = 1
 
-" TagBar
-nmap <F7> :TagbarToggle<CR>
-
-" im-select
-" let g:im_select_enable_focus_events = 0
-
-" =============================================================================
-" # Editor settings
-" =============================================================================
-" Hybrid line number in different mode, see https://github.com/jeffkreeftmeijer/vim-numbertoggle
+" Basic Settings {{{
+" Hybrid line number in different mode
+" see https://github.com/jeffkreeftmeijer/vim-numbertoggle
 " augroup numbertoggle
 "   autocmd!
 "   autocmd BufEnter,FocusGained,InsertLeave,WinEnter * if &nu | set rnu   | endif
@@ -108,24 +119,37 @@ set incsearch		      " search in real time
 set ignorecase		      " search ignore case
 set wildmenu		      " vim command auto complete
 " set clipboard=unnamed
-set ts=4 sw=4 et
+set tabstop=4 shiftwidth=4 expandtab
 set laststatus=2
 set number
-set expandtab
 set tabstop=4
 set shiftwidth=4
 set softtabstop=4
-set foldmethod=syntax
+" set foldmethod=syntax
 set nofoldenable
 "set ruler
 "set cursorline
+" }}}
 
-au BufNewFile,BufRead Dockerfile* set filetype=Dockerfile
 
+" # Plugin settings {{{
 " =============================================================================
-" # Plugin settings
-" =============================================================================
-" NERDTree
+" LeaderF Settings {{{
+let g:Lf_WindowPosition = 'popup'
+" let g:Lf_UseVersionControlTool = 0
+let g:Lf_ShowDevIcons = 0
+let g:Lf_ShortcutF = "<C-p>"
+let g:Lf_ShortcutB = "<C-a>"
+noremap <leader>m :<C-U><C-R>=printf("Leaderf mru %s", "")<CR><CR>
+noremap <leader>f :Leaderf rg<CR>
+noremap <leader>b :Leaderf buffer<CR>
+noremap <leader>a :Leaderf cmdHistory<CR>
+xnoremap gf :<C-U><C-R>=printf("Leaderf! rg -F -e %s ", leaderf#Rg#visual())<CR>
+let g:Lf_CommandMap = {'<C-J>': ['<C-J>', '<Down>'], '<C-K>': ['<C-K>', '<Up>']}
+let g:Lf_PreviewInPopup = 1
+" }}}
+
+" NERDTree Settings {{{
 " close vim if the only window left open is a NERDTree
 autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
 map <F1> :NERDTreeToggle<CR>
@@ -135,12 +159,12 @@ let NERDTreeDirArrows=1
 " Open NERDTree on startup if no file is specified
 " autocmd StdinReadPre * let s:std_in=1
 " autocmd VimEnter * if argc() == 0 && !exists("s:std_in") | NERDTree | endif
+" }}}
 
-let g:indent_guides_start_level=1
-let g:indent_guides_guide_size=1
-let g:indent_guides_enable_on_vim_startup=1
+" TagBar
+nmap <F7> :TagbarToggle<CR>
 
-" Coc Completion
+" Coc.nvim Settings ------------------------------------------------------ {{{
 " Better display for messages
 set cmdheight=2
 
@@ -167,15 +191,13 @@ inoremap <silent><expr> <c-.> coc#refresh()
 " inoremap <expr> <cr> pumvisible() ? "\<C-y>" : "\<C-g>u\<CR>"
 " Or use `complete_info` if your vim support it, like:
 inoremap <expr> <cr> complete_info()["selected"] != "-1" ? "\<C-y>" : "\<C-g>u\<CR>"
+" }}}
 
 let g:rainbow_active = 1
 
-" Markdown
-" set concealcursor=i
-" set g:indentLine_concealcursor="nc"
-
-" vimtex
+" vimtex Settings {{{
 let g:tex_flavor='latex'
+let g:vimtex_indent_bib_enabled=0
 let g:vimtex_quickfix_mode=0
 let g:vimtex_texcount_custom_arg='-incbib -ch' " include bibtex and count chinese characters
 let g:vimtex_compiler_latexmk = {
@@ -187,17 +209,11 @@ let g:vimtex_compiler_latexmk = {
     \   '-shell-escape',
     \ ],
     \}
+" }}}
 
-
-noremap <leader>j <c-^>
-
-" Beancount shortcut
-inoremap <F5> <C-R>=strftime("%F")<CR>
-
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" gutentags Settings {{{
 " gutentags settings: enable for some dirs
 " (https://github.com/ludovicchabant/vim-gutentags/issues/82)
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
 " let g:gutentags_enabled_dirs = []
 " let g:gutentags_enabled_user_func = 'CheckEnabledDirs'
@@ -223,21 +239,18 @@ inoremap <F5> <C-R>=strftime("%F")<CR>
 
 "     return 0
 " endfunction
+" }}}
 
-" wiki
-let g:wiki_root = '~/notes'
-let g:wiki_filetypes = ['wiki', 'md']
+" }}}
 
 
-" =============================================================================
-" # Plugin
+" # Plugin {{{
 " =============================================================================
 call plug#begin('~/.vim/plugged')
-Plug 'lervag/vimtex'
 " Vim Enhancement
 Plug 'tpope/vim-surround'
 Plug 'tpope/vim-commentary'
-Plug 'easymotion/vim-easymotion'
+" Plug 'easymotion/vim-easymotion'
 Plug 'scrooloose/nerdtree'
 Plug 'wakatime/vim-wakatime'
 Plug 'ybian/smartim'
@@ -253,7 +266,7 @@ Plug 'tpope/vim-eunuch'
 
 " GUI Enhancement
 Plug 'itchyny/lightline.vim'
-Plug 'frazrepo/vim-rainbow'
+" Plug 'frazrepo/vim-rainbow'
 Plug 'airblade/vim-gitgutter'
 " Plug 'Yggdroot/indentLine'
 
@@ -262,18 +275,19 @@ Plug 'airblade/vim-rooter'
 Plug 'Yggdroot/LeaderF', { 'do': './install.sh' }
 
 " Language Specific
+Plug 'lervag/vimtex'
 Plug 'cespare/vim-toml'
 Plug 'neoclide/coc.nvim'
 Plug 'majutsushi/tagbar'
-Plug 'plasticboy/vim-markdown', { 'for': 'markdown' }
+Plug 'plasticboy/vim-markdown'
 Plug 'nathangrigg/vim-beancount'
 " Plug 'chiel92/vim-autoformat'
 " Plug 'wlangstroth/vim-racket', { 'for': 'racket'}
-
 " Plug 'ludovicchabant/vim-gutentags'
 Plug 'lervag/wiki.vim'
 call plug#end()
 
 filetype plugin indent on    " required
+" }}}
 
 runtime! userautoload/*.vim
