@@ -2,7 +2,7 @@
 " Does not really look coherent with iTerm2.
 " set termguicolors
 
-colorscheme desert
+colorscheme zellner
 
 " vim-gitgutter
 " let g:gitgutter_signs = 0

@@ -1,4 +1,4 @@
-" wiki
+" wiki.vim
 let g:wiki_root = '~/notes'
 let g:wiki_filetypes = ['wiki', 'md']
 let g:wiki_zotero_root = '~/Zotero'
@@ -32,4 +32,3 @@ function PasteMDLink()
 endfunction
 
 nmap <Leader>pmd :call PasteMDLink()<cr>
-

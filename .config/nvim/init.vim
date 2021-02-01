@@ -1,4 +1,3 @@
-
 let mapleader = "\<Space>"
 let maplocalleader = "\\"
 
@@ -17,6 +16,9 @@ nnoremap <leader>ev :tab new $MYVIMRC<cr>
 nnoremap <leader>sv :source $MYVIMRC<cr>
 
 iabbrev @@ im.qianmian.yu@gmail.com
+
+"Add a mapping to your ~/.vimrc file that opens the previous buffer in a split of your choosing (vertical/horizontal, above/below/left/right).
+
 " }}}
 
 
@@ -46,9 +48,11 @@ augroup END
 nnoremap <C-e> 2<C-e>
 nnoremap <C-y> 2<C-y>
 
+" Search
 vnoremap <C-h> :nohlsearch<cr>
 nnoremap <C-h> :nohlsearch<cr>
-nnoremap <BS> :nohlsearch<cr>
+nnoremap <BS>  :nohlsearch<cr>
+nnoremap /     /\v
 
 nnoremap <C-Left> :tabprevious<CR>
 nnoremap <C-Right> :tabnext<CR>
@@ -70,6 +74,10 @@ nnoremap <down> :bn<CR>
 " tabs
 nnoremap <leader>i gT<CR>
 nnoremap <leader>o gt<CR>
+
+" Jump List
+nnoremap <leader>[ <c-O>
+nnoremap <leader>] <c-I>
 
 " clipboard
 noremap <Leader>y "*y
@@ -119,18 +127,24 @@ set incsearch		      " search in real time
 set ignorecase		      " search ignore case
 set wildmenu		      " vim command auto complete
 " set clipboard=unnamed
-set tabstop=4 shiftwidth=4 expandtab
 set laststatus=2
 set number
-set tabstop=4
-set shiftwidth=4
-set softtabstop=4
+set tabstop=2 shiftwidth=2 expandtab
+set softtabstop=2
 " set foldmethod=syntax
 set nofoldenable
 "set ruler
 "set cursorline
 " }}}
 
+" Helper Functions {{{
+
+" Highlight trailing spaces in file
+" Use `:match none` to turn it off
+function TrailingSpace()
+  match Error /\v\s+$/
+endfunction
+" }}}
 
 " # Plugin settings {{{
 " =============================================================================
@@ -243,6 +257,19 @@ let g:vimtex_compiler_latexmk = {
 
 " }}}
 
+" wiki.vim Settings {{{
+let g:wiki_file_open = 'WikiFileOpen'
+
+function! WikiFileOpen(...) abort dict
+  if self.path =~# 'png$'
+    silent execute '!open' fnameescape(self.path) '&'
+    return 1
+  endif
+
+  return 0
+endfunction
+" }}}
+
 
 " # Plugin {{{
 " =============================================================================
@@ -285,6 +312,8 @@ Plug 'nathangrigg/vim-beancount'
 " Plug 'wlangstroth/vim-racket', { 'for': 'racket'}
 " Plug 'ludovicchabant/vim-gutentags'
 Plug 'lervag/wiki.vim'
+
+Plug 'file::///Users/Quack/.vim/plugged/potion'
 call plug#end()
 
 filetype plugin indent on    " required
