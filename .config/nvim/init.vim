@@ -85,6 +85,8 @@ noremap <Leader>p "*p
 
 nnoremap <leader>l :silent make\|redraw!\|cc<CR>
 
+nnoremap <F6> :exe ':silent !open ''%'''<CR>
+
 " Help Page
 cabbrev help tab help
 
@@ -276,6 +278,7 @@ endfunction
 call plug#begin('~/.vim/plugged')
 " Vim Enhancement
 Plug 'tpope/vim-surround'
+Plug 'tpope/vim-fugitive'
 Plug 'tpope/vim-commentary'
 " Plug 'easymotion/vim-easymotion'
 Plug 'scrooloose/nerdtree'
@@ -300,6 +303,7 @@ Plug 'airblade/vim-gitgutter'
 " Fuzzy Finder
 Plug 'airblade/vim-rooter'
 Plug 'Yggdroot/LeaderF', { 'do': './install.sh' }
+Plug 'brooth/far.vim'
 
 " Language Specific
 Plug 'lervag/vimtex'
@@ -312,8 +316,9 @@ Plug 'nathangrigg/vim-beancount'
 " Plug 'wlangstroth/vim-racket', { 'for': 'racket'}
 " Plug 'ludovicchabant/vim-gutentags'
 Plug 'lervag/wiki.vim'
+" Plug 'habamax/vim-asciidoctor'
 
-Plug 'file::///Users/Quack/.vim/plugged/potion'
+" Plug 'file::///Users/Quack/.vim/plugged/potion'
 call plug#end()
 
 filetype plugin indent on    " required
