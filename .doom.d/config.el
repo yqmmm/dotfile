@@ -18,7 +18,7 @@
 ;;
 ;; They all accept either a font-spec, font string ("Input Mono-12"), or xlfd
 ;; font string. You generally only need these two:
-(setq doom-font (font-spec :family "monospace" :size 14))
+(setq doom-font (font-spec :family "JetBrains Mono" :size 14))
 
 ;; There are two ways to load a theme. Both assume the theme is installed and
 ;; available. You can either set `doom-theme' or manually load a theme with the
@@ -30,7 +30,7 @@
 
 ;; If you want to change the style of line numbers, change this to `relative' or
 ;; `nil' to disable it:
-(setq display-line-numbers-type t)
+(setq display-line-numbers-type 'relative)
 
 
 ;; Here are some additional functions/macros that could help you configure Doom:
@@ -48,3 +48,32 @@
 ;;
 ;; You can also try 'gd' (or 'C-c g d') to jump to their definition and see how
 ;; they are implemented.
+
+(map! :nv "<left>" 'evil-first-non-blank
+      :nv "<right>" 'evil-end-of-line)
+
+
+(setq org-agenda-files '("~/notes/" "~/notes/log/"))
+
+;; smart-input-source https://github.com/laishulu/emacs-smart-input-source
+(use-package sis
+  ;; :hook
+  ;; enable the /follow context/ and /inline region/ mode for specific buffers
+  ;; (((text-mode prog-mode) . sis-context-mode)
+  ;;  ((text-mode prog-mode) . sis-inline-mode))
+
+  :config
+  ;; For MacOS
+  (sis-ism-lazyman-config
+   "com.apple.keylayout.US"
+   "com.sogou.inputmethod.sogou.pinyin")
+
+  ;; enable the /cursor color/ mode
+  (sis-global-cursor-color-mode t)
+  ;; enable the /respect/ mode
+  (sis-global-respect-mode t)
+  ;; enable the /context/ mode for all buffers
+  (sis-global-context-mode t)
+  ;; enable the /inline english/ mode for all buffers
+  (sis-global-inline-mode t)
+  )
