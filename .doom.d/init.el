@@ -22,7 +22,8 @@
        company           ; the ultimate code completion backend
        ;;helm              ; the *other* search engine for love and life
        ;;ido               ; the other *other* search engine...
-       ivy               ; a search engine for love and life
+       (ivy               ; a search engine for love and life
+        +fuzzy)
 
        :ui
        ;;deft              ; notational velocity for Emacs
@@ -139,11 +140,12 @@
        ;;nix               ; I hereby declare "nix geht mehr!"
        ;;ocaml             ; an objective camel
        (org              ; organize your plain life in plain text
-        +dragndrop       ; drag & drop files/images into org buffers
+        ;; +dragndrop       ; drag & drop files/images into org buffers
         ;;+hugo            ; use Emacs for hugo blogging
         ;;+jupyter        ; ipython/jupyter support for babel
         ;;+pandoc          ; export-with-pandoc support
         ;;+pomodoro        ; be fruitful with the tomato technique
+        +pretty
         +present)        ; using org-mode for presentations
        ;;perl              ; write code no one else can comprehend
        ;;php               ; perl's insecure younger brother

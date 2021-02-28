@@ -69,7 +69,7 @@
    "com.sogou.inputmethod.sogou.pinyin")
 
   ;; enable the /cursor color/ mode
-  (sis-global-cursor-color-mode t)
+  ;; (sis-global-cursor-color-mode t)
   ;; enable the /respect/ mode
   (sis-global-respect-mode t)
   ;; enable the /context/ mode for all buffers
@@ -77,3 +77,37 @@
   ;; enable the /inline english/ mode for all buffers
   (sis-global-inline-mode t)
   )
+
+
+(defun zz/org-download-paste-clipboard (&optional use-default-filename)
+  (interactive "P")
+  (require 'org-download)
+  (let ((file
+         (if (not use-default-filename)
+             (read-string (format "Filename [%s]: "
+                                  org-download-screenshot-basename)
+                          nil nil org-download-screenshot-basename)
+           nil)))
+    (org-download-clipboard file)))
+
+(after! org
+  (setq org-download-method 'directory)
+  (setq org-download-image-dir "~/notes/img/")
+  (setq org-download-heading-lvl nil)
+  (setq org-download-timestamp "%Y%m%d-%H%M%S_")
+  (setq org-image-actual-width 300)
+  (setq org-download-screenshot-method "/usr/local/bin/pngpaste %s")
+  (map! :map org-mode-map
+        "C-c l a y" #'zz/org-download-paste-clipboard
+        "C-M-y" #'zz/org-download-paste-clipboard))
+
+;; This is a Emacs mac port specific configuration, see 'Mac Fullscreen' for help
+(set-frame-parameter nil 'fullscreen 'fullscreen)
+
+(global-wakatime-mode)
+
+;; GUI Settings for YAMAMOTO Mitsuharu's Mac port of GNU Emacs.
+;; https://github.com/railwaycat/homebrew-emacsmacport
+(when (and (spacemacs/system-is-mac) (display-graphic-p))
+  ;; Disable pixel-by-pixel scrolling, since it's extremely choppy.
+  (setq mac-mouse-wheel-smooth-scroll nil))

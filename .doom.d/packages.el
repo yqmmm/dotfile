@@ -53,3 +53,5 @@
 
 
 (package! sis)
+(package! org-download)
+(package! wakatime-mode)
