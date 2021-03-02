@@ -55,3 +55,5 @@
 (package! sis)
 (package! org-download)
 (package! wakatime-mode)
+(package! ivy-bibtex)
+;; (package! org-ref-ivy)

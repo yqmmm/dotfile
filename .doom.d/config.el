@@ -49,8 +49,8 @@
 ;; You can also try 'gd' (or 'C-c g d') to jump to their definition and see how
 ;; they are implemented.
 
-(map! :nv "<left>" 'evil-first-non-blank
-      :nv "<right>" 'evil-end-of-line)
+(map! :nvm "<left>" 'evil-first-non-blank
+      :nvm "<right>" 'evil-end-of-line)
 
 
 (setq org-agenda-files '("~/notes/" "~/notes/log/"))
@@ -91,23 +91,41 @@
     (org-download-clipboard file)))
 
 (after! org
+  (setq org-image-actual-width '(500))
   (setq org-download-method 'directory)
   (setq org-download-image-dir "~/notes/img/")
   (setq org-download-heading-lvl nil)
   (setq org-download-timestamp "%Y%m%d-%H%M%S_")
-  (setq org-image-actual-width 300)
   (setq org-download-screenshot-method "/usr/local/bin/pngpaste %s")
   (map! :map org-mode-map
         "C-c l a y" #'zz/org-download-paste-clipboard
         "C-M-y" #'zz/org-download-paste-clipboard))
 
 ;; This is a Emacs mac port specific configuration, see 'Mac Fullscreen' for help
-(set-frame-parameter nil 'fullscreen 'fullscreen)
+;; TODO This does not work properly
+;; (set-frame-parameter nil 'fullscreen 'fullscreen)
 
 (global-wakatime-mode)
 
-;; GUI Settings for YAMAMOTO Mitsuharu's Mac port of GNU Emacs.
-;; https://github.com/railwaycat/homebrew-emacsmacport
-(when (and (spacemacs/system-is-mac) (display-graphic-p))
-  ;; Disable pixel-by-pixel scrolling, since it's extremely choppy.
-  (setq mac-mouse-wheel-smooth-scroll nil))
+;; Disable pixel-by-pixel scrolling, since it's extremely choppy.
+(setq mac-mouse-wheel-smooth-scroll nil)
+
+(autoload 'ivy-bibtex "ivy-bibtex" "" t)
+;; ivy-bibtex requires ivy's `ivy--regex-ignore-order` regex builder, which
+;; ignores the order of regexp tokens when searching for matching candidates.
+;; Add something like this to your init file:
+;; (setq ivy-re-builders-alist
+;;       '((ivy-bibtex . ivy--regex-ignore-order)
+;;         (t . ivy--regex-plus)))
+(setq bibtex-completion-bibliography
+      '("~/notes/zotero.bib"))
+(setq bibtex-completion-pdf-field "file")
+(setq bibtex-completion-pdf-open-function
+  (lambda (fpath)
+    (call-process "open" nil 0 nil fpath)))
+(setq bibtex-completion-format-citation-functions
+      '((org-mode . bibtex-completion-format-citation-org-title-link-to-PDF)))
+(setq ivy-bibtex-default-action 'ivy-bibtex-insert-citation)
+(map! :leader
+      :n
+      "\"" #'ivy-bibtex)
