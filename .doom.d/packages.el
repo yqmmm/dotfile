@@ -57,3 +57,5 @@
 (package! wakatime-mode)
 (package! ivy-bibtex)
 ;; (package! org-ref-ivy)
+;; (package! org-roam)
+;; (package! mixed-pitch)

@@ -18,7 +18,8 @@
 ;;
 ;; They all accept either a font-spec, font string ("Input Mono-12"), or xlfd
 ;; font string. You generally only need these two:
-(setq doom-font (font-spec :family "JetBrains Mono" :size 14))
+(setq doom-font (font-spec :family "Consolas" :size 15)
+      doom-variable-pitch-font (font-spec :family "Source Sans Pro" :size 14))
 
 ;; There are two ways to load a theme. Both assume the theme is installed and
 ;; available. You can either set `doom-theme' or manually load a theme with the
@@ -129,3 +130,25 @@
 (map! :leader
       :n
       "\"" #'ivy-bibtex)
+
+; osx-like jumping
+(map! "s-[" 'better-jumper-jump-backward)
+(map! "s-]" 'better-jumper-jump-forward)
+
+; org-roam
+(setq org-roam-directory "~/notes")
+;; (add-hook 'after-init-hook 'org-roam-mode)
+
+; Need this for pitched font to work, Search "doom emacs pitched font"
+;; (use-package! mixed-pitch
+;;   :hook (org-mode . mixed-pitch-mode)
+;;   :config
+;;   (setq mixed-pitch-set-heigth t))
+;; (add-hook 'org-mode-hook 'variable-pitch-mode)
+
+(defun markdown-convert-buffer-to-org ()
+  "Convert the current buffer's content from markdown to orgmode format and save it with the current buffer's file name but with .org extension."
+  (interactive)
+  (shell-command-on-region (point-min) (point-max)
+                           (format "pandoc -f markdown -t org -o '%s'"
+                                   (concat (file-name-sans-extension (buffer-file-name)) ".org"))))
