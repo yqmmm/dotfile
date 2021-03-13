@@ -50,11 +50,21 @@
 ;; You can also try 'gd' (or 'C-c g d') to jump to their definition and see how
 ;; they are implemented.
 
+;; Make arrow key greate again
 (map! :nvm "<left>" 'evil-first-non-blank
-      :nvm "<right>" 'evil-end-of-line)
+      :nvm "<right>" 'evil-end-of-line
+      :nvm "<up>" 'beginning-of-defun
+      :nvm "<down>" 'end-of-defun)
 
+(map! :nvm "s-{" '+workspace/switch-left
+      :nvm "s-}" '+workspace/switch-right)
 
-(setq org-agenda-files '("~/notes/" "~/notes/log/"))
+;; Make window movement great again
+(map! :g "s-j" 'evil-window-down
+      :g "s-k" 'evil-window-up
+      :g "M-s-h" 'evil-window-left ;; DANGER ALERT: command-h is "hide window" macos which I rarely use. So i map it to "M-s-h" in BetterTouchTool
+      :g "s-l" 'evil-window-right
+      )
 
 ;; smart-input-source https://github.com/laishulu/emacs-smart-input-source
 (use-package sis
@@ -92,6 +102,8 @@
     (org-download-clipboard file)))
 
 (after! org
+  (setq org-agenda-files '("~/notes" "~/notes/daily"))
+  (setq org-log-done 'time)
   (setq org-image-actual-width '(500))
   (setq org-download-method 'directory)
   (setq org-download-image-dir "~/notes/img/")
@@ -111,13 +123,20 @@
 ;; Disable pixel-by-pixel scrolling, since it's extremely choppy.
 (setq mac-mouse-wheel-smooth-scroll nil)
 
-(autoload 'ivy-bibtex "ivy-bibtex" "" t)
-;; ivy-bibtex requires ivy's `ivy--regex-ignore-order` regex builder, which
-;; ignores the order of regexp tokens when searching for matching candidates.
-;; Add something like this to your init file:
-;; (setq ivy-re-builders-alist
-;;       '((ivy-bibtex . ivy--regex-ignore-order)
-;;         (t . ivy--regex-plus)))
+;; ----------
+;; ivy-bibtex
+;; ----------
+(defun bibtex-completion-format-citation-org-ref (keys)
+  "Format ebib references for keys in KEYS."
+  (s-join ", "
+          (--map (format "cite:%s" it) keys)))
+
+; TODO Change this to bibtex-completion?
+(use-package! ivy-bibtex
+  :defer t
+  :config
+  (add-to-list 'ivy-re-builders-alist '(ivy-bibtex . ivy--regex-plus)))
+
 (setq bibtex-completion-bibliography
       '("~/notes/zotero.bib"))
 (setq bibtex-completion-pdf-field "file")
@@ -125,19 +144,52 @@
   (lambda (fpath)
     (call-process "open" nil 0 nil fpath)))
 (setq bibtex-completion-format-citation-functions
-      '((org-mode . bibtex-completion-format-citation-org-title-link-to-PDF)))
+      '((org-mode . bibtex-completion-format-citation-org-ref)))
 (setq ivy-bibtex-default-action 'ivy-bibtex-insert-citation)
 (map! :leader
       :n
       "\"" #'ivy-bibtex)
 
+
+;; ----------
+;; org-roam
+;; ----------
+(setq org-roam-directory "~/notes")
+; Open org-roam buffer (backlinks) in the bottom with a vertical screen.
+(setq org-roam-buffer-position
+      (lambda ()
+        (if (> (frame-native-height) (frame-native-width))
+            'bottom 'right)))
+
+;; ----------
+;; org-ref
+;; ----------
+(use-package org-ref
+  :after org
+    :preface
+    (setq
+         org-ref-completion-library 'org-ref-ivy-cite
+         org-ref-default-bibliography "~/notes/zotero.bib"
+         ;; org-ref-bibliography-notes "/home/haozeke/Git/Gitlab/Mine/Notes/bibnotes.org"
+         ;; org-ref-note-title-format "* TODO %y - %t\n :PROPERTIES:\n  :Custom_ID: %k\n  :NOTER_DOCUMENT: %F\n :ROAM_KEY: cite:%k\n  :AUTHOR: %9a\n  :JOURNAL: %j\n  :YEAR: %y\n  :VOLUME: %v\n  :PAGES: %p\n  :DOI: %D\n  :URL: %U\n :END:\n\n"
+         ;; org-ref-notes-directory "/home/haozeke/Git/Gitlab/Mine/Notes/"
+         ;; org-ref-notes-function 'orb-edit-notes
+    )
+    :config
+    (setq org-ref-get-pdf-filename-function 'org-ref-get-pdf-filename-helm-bibtex)
+  )
+;; ---------------
+;; org-roam-bibtex
+;; ---------------
+(use-package! org-roam-bibtex
+  :load-path "~/notes/zotero.bib" ;Modify with your own path
+  :hook (org-roam-mode . org-roam-bibtex-mode)
+  :bind (:map org-mode-map
+         (("C-c n a" . orb-note-actions))))
+
 ; osx-like jumping
 (map! "s-[" 'better-jumper-jump-backward)
 (map! "s-]" 'better-jumper-jump-forward)
-
-; org-roam
-(setq org-roam-directory "~/notes")
-;; (add-hook 'after-init-hook 'org-roam-mode)
 
 ; Need this for pitched font to work, Search "doom emacs pitched font"
 ;; (use-package! mixed-pitch
@@ -151,4 +203,5 @@
   (interactive)
   (shell-command-on-region (point-min) (point-max)
                            (format "pandoc -f markdown -t org -o '%s'"
+                           ;; (format "pandoc -f markdown -t org -o '%s' | | sed -E "/^[[:space:]]+:/ d""
                                    (concat (file-name-sans-extension (buffer-file-name)) ".org"))))
