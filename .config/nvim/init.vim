@@ -54,6 +54,8 @@ nnoremap <C-h> :nohlsearch<cr>
 nnoremap <BS>  :nohlsearch<cr>
 nnoremap /     /\v
 
+vnoremap <C-r> "hy:%s/<C-r>h//gc<left><left><left>
+
 nnoremap <C-Left> :tabprevious<CR>
 nnoremap <C-Right> :tabnext<CR>
 

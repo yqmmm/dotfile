@@ -31,7 +31,7 @@
 
 ;; If you want to change the style of line numbers, change this to `relative' or
 ;; `nil' to disable it:
-(setq display-line-numbers-type 'relative)
+(setq display-line-numbers-type 't)
 
 
 ;; Here are some additional functions/macros that could help you configure Doom:
@@ -205,3 +205,18 @@
                            (format "pandoc -f markdown -t org -o '%s'"
                            ;; (format "pandoc -f markdown -t org -o '%s' | | sed -E "/^[[:space:]]+:/ d""
                                    (concat (file-name-sans-extension (buffer-file-name)) ".org"))))
+
+(use-package org-roam-server
+  :ensure t
+  :config
+  (setq org-roam-server-host "127.0.0.1"
+        org-roam-server-port 9090
+        org-roam-server-authenticate nil
+        org-roam-server-export-inline-images t
+        org-roam-server-serve-files nil
+        org-roam-server-served-file-extensions '("pdf" "mp4" "ogv")
+        org-roam-server-network-poll t
+        org-roam-server-network-arrows nil
+        org-roam-server-network-label-truncate t
+        org-roam-server-network-label-truncate-length 60
+        org-roam-server-network-label-wrap-length 20))
