@@ -102,7 +102,7 @@
     (org-download-clipboard file)))
 
 (after! org
-  (setq org-agenda-files '("~/notes" "~/notes/daily"))
+  (setq org-agenda-files '("~/notes" "~/notes/daily" "~/notes/projects"))
   (setq org-log-done 'time)
   (setq org-image-actual-width '(500))
   (setq org-download-method 'directory)
@@ -220,3 +220,15 @@
         org-roam-server-network-label-truncate t
         org-roam-server-network-label-truncate-length 60
         org-roam-server-network-label-wrap-length 20))
+
+;; use Homebrew llvm instead apple one
+;; the apple one did not use the =.clangd= file
+(setq lsp-clients--clangd-default-executable "/usr/local/opt/llvm/bin/clangd")
+
+(setq lsp-clients-clangd-args '("-j=3"
+                                "--background-index"
+                                "--clang-tidy"
+                                "--completion-style=detailed"
+                                "--header-insertion=never"))
+;; (after! lsp-clangd (set-lsp-priority! 'clangd 2))
+(setq leetcode-prefer-language "cpp")
