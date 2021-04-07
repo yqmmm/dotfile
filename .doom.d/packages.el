@@ -67,4 +67,3 @@
 (package! org-roam-server)
 
 ;; (package! mixed-pitch)
-(package! leetcode)

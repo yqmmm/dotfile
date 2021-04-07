@@ -66,6 +66,13 @@
       :g "s-l" 'evil-window-right
       )
 
+;; Swap window
+(map! :leader
+      :prefix "TAB"
+      :desc "Swap Left"  "i" #'+workspace/swap-left
+      :desc "Swap Right" "o" #'+workspace/swap-right
+      )
+
 ;; smart-input-source https://github.com/laishulu/emacs-smart-input-source
 (use-package sis
   ;; :hook
@@ -232,3 +239,9 @@
                                 "--header-insertion=never"))
 ;; (after! lsp-clangd (set-lsp-priority! 'clangd 2))
 (setq leetcode-prefer-language "cpp")
+
+(defun compileandrun()
+  (interactive)
+  (let* ((src (file-name-nondirectory (buffer-file-name)))
+         (exe (file-name-sans-extension src)))
+    (compile (concat "g++ --std=c++11 " src " -o " exe " && ./" exe))))
